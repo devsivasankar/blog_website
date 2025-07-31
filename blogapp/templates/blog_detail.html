@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Website</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" 
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+
+</head>
+<body>
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+    
+        /* Navbar styling */
+        nav {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    
+        .navbar-nav .nav-link {
+            font-size: 1rem;
+            margin-right: 10px;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+    
+        .navbar-nav .nav-link:hover {
+            color: #007bff;
+        }
+    
+        .search-bar input {
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    
+        .search-bar button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    
+        /* Full-size image styling */
+        .blog-image-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+    
+        .blog-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    
+        /* Bookmark button */
+        .bookmark-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: black;
+            padding: 5px;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+    
+        .bookmark-btn:hover {
+            color: #0056b3;
+            transform: scale(1.1);
+        }
+    
+        /* Blog title and metadata */
+        .blog-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+    
+        .blog-meta {
+            color: #777;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+    
+        /* Blog content */
+        .blog-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            text-align: justify;
+        }
+    
+        /* Back button */
+        .btn-back {
+            margin-top: 30px;
+            background-color: #6c757d;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+    
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+    
+        /* Responsive styling */
+        @media (max-width: 992px) {
+            .blog-title {
+                font-size: 2rem;
+            }
+    
+            .blog-meta {
+                font-size: 0.9rem;
+            }
+    
+            .blog-content {
+                font-size: 1rem;
+            }
+        }
+    
+        @media (max-width: 768px) {
+            .blog-title {
+                font-size: 1.8rem;
+            }
+    
+            .blog-meta {
+                font-size: 0.85rem;
+            }
+    
+            .blog-content {
+                font-size: 0.95rem;
+            }
+        }
+    
+        @media (max-width: 576px) {
+            .blog-title {
+                font-size: 1.5rem;
+            }
+    
+            .blog-meta {
+                font-size: 0.8rem;
+            }
+    
+            .blog-content {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Hello {{ user.username }} 🎊</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href={% url 'index' %}>Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href={% url 'login' %}>Login</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href={% url 'index' %}>Home</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href={% url 'collection' %}>Collection</a>
+                    </li>
+                    {% else %}
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href={% url 'userblog' %}>Post a Blog</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href={% url 'login' %}>Post a Blog</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <form class="d-flex search-bar ms-lg-3 mt-2 mt-lg-0">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <!-- Full-size blog image with bookmark button -->
+                <div class="blog-image-container">
+                    <img src={{ post.image.url }} alt={{ post.title }} class="blog-image">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'save_bookamark' post.pk %}" class="bookmark-btn">
+                        <i class="fa-regular fa-bookmark"></i>
+                    </a>
+                    {% endif %}
+                </div>
+    
+                <!-- Blog content -->
+                <h1 class="blog-title">{{ post.title }}</h1>
+                <p class="blog-meta">Published on: {{ post.published_date|date:"F d, Y" }}</p>
+                <p class="text-decoration-underline">Author name: {{ post.user.username }}</p>
+    
+                <div class="blog-content">
+                    {{ post.content|linebreaks }}
+                </div>
+    
+                <!-- Back button -->
+                <a href="{% url 'index' %}" class="btn btn-secondary btn-back">Back to Home</a>
+            </div>
+        </div>
+    
+        <!-- Comments Section -->
+        <div class="row mt-5">
+            <div class="col-lg-10 mx-auto">
+
+    
+                <!-- Add comment form -->
+                {% if user.is_authenticated %}
+                <h4 class="mt-4">Leave a Comment</h4>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea name="content" class="form-control" rows="3" placeholder="Write your comment..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+                </form>
+                {% else %}
+                <p class="mt-4">
+                    <a href="{% url 'login' %}">Log in</a> to leave a comment.
+                </p>
+                {% endif %}
+
+
+                <h3 class="mb-4">Comments</h3>
+    
+                <!-- Display comments -->
+                {% if comments %}
+                    {% for comment in comments %}
+                    <div class="comment mb-4">
+                        <strong>{{ comment.user.username }}</strong>
+                        <p>{{ comment.content }}</p>
+                        <small class="text-muted">{{ comment.created_at|date:"F d, Y h:i A" }}</small>
+                        <hr>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No comments yet. Be the first to comment!</p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    
+
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Blog</title>
+    <!-- Add Bootstrap and custom styles here -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Website</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" 
+    integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+    
+        h1 {
+            font-weight: 700;
+            color: #007bff;
+        }
+    
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        .form-group {
+            margin-bottom: 1rem;
+        }
+    
+        label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+    
+        input[type="text"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    
+        input[type="text"]:focus,
+        input[type="file"]:focus,
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+        }
+    
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px 15px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .container {
+                padding: 15px;
+            }
+    
+            button[type="submit"] {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Post Your Blog</h1>
+
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                <label for="title">Blog Title</label>
+                <input type="text" name="title" id="title" class="form-control" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="image">Upload Image</label>
+                <input type="file" accept='image/*' name="image" id="image" class="form-control-file" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="content">Blog Content</label>
+                <textarea name="content" id="content" rows="5" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Post Blog</button>
+        </form>
+    </div>
+</body>
+</html>
